@@ -54,7 +54,6 @@ class CricketDatabase:
             print(MAIN_WEBSITE + l)
 
 
-
 if __name__ == "__main__":
     cric_db = CricketDatabase()
     # last_extracted_series = "Ireland tour of West Indies, 2020"
