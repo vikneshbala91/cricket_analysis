@@ -56,6 +56,6 @@ class CricketDatabase:
 
 if __name__ == "__main__":
     cric_db = CricketDatabase()
-    # last_extracted_series = "Ireland tour of West Indies, 2020"
+    # last_extracted_series = "Ireland tour of West Indies, 2020 "
     last_extracted_series = None
     cric_db.run(last_extracted_series=last_extracted_series)
