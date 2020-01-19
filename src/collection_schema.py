@@ -13,3 +13,24 @@ class TOURNAMENT:
         tournament_end_month: None,
         tournament_link: None
     }
+
+
+class MATCH:
+    match_title = 'MATCH_TITLE'
+    match_start_date = 'MATCH_START_DATE'
+    match_end_date = 'MATCH_END_DATE'
+    match_place = 'MATCH_PLACE'
+    match_result = 'MATCH_RESULT'
+    match_time_gmt = 'MATCH_TIME_GMT'
+    match_time_local = 'MATCH_TIME_LOCAL'
+    match_link = 'MATCH_LINK'
+    collection_json = {
+        match_title: None,
+        match_start_date: None,
+        match_end_date: None,
+        match_place: None,
+        match_result: None,
+        match_time_gmt: None,
+        match_time_local: None,
+        match_link: None
+    }
