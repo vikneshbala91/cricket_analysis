@@ -2,15 +2,15 @@ class TOURNAMENT:
     tournament_type = 'TOURNAMENT_TYPE'
     tournament_title = 'TOURNAMENT_TITLE'
     tournament_year = 'TOURNAMENT_YEAR'
-    tournament_start_month = 'TOURNAMENT_START_MONTH'
-    tournament_end_month = 'TOURNAMENT_END_MONTH'
+    tournament_start_date = 'TOURNAMENT_START_DATE'
+    tournament_end_date = 'TOURNAMENT_END_DATE'
     tournament_link = 'TOURNAMENT_LINK'
     collection_json = {
         tournament_type: None,
         tournament_title: None,
         tournament_year: None,
-        tournament_start_month: None,
-        tournament_end_month: None,
+        tournament_start_date: None,
+        tournament_end_date: None,
         tournament_link: None
     }
 
