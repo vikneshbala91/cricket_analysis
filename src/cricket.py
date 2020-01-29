@@ -49,7 +49,6 @@ class CricketDatabase:
                         continue
                     if last_extraction_date is not None and end_date < last_extraction_date:
                         continue
-                    print(tour.contents[0].text.strip())
                     collection_json[TOURNAMENT.tournament_type] = tour_type
                     collection_json[TOURNAMENT.tournament_title] = tour.contents[0].text.strip()
                     collection_json[TOURNAMENT.tournament_year] = year
@@ -57,12 +56,10 @@ class CricketDatabase:
                     collection_json[TOURNAMENT.tournament_end_date] = end_date
                     collection_json[TOURNAMENT.tournament_link] = tour.contents[0]['href']
                     tournament_count += 1
-                    print(last_extraction_date, only_series)
                     if last_extraction_date is not None:
                         tournament_data_list.append(collection_json)
                         tournament_links.update({tournament_count: collection_json[TOURNAMENT.tournament_link]})
                     elif only_series is not None:
-                        print('ent')
                         if tour.contents[0].text.strip() == only_series.strip():
                             tournament_data_list.append(collection_json)
                             tournament_links.update({1: collection_json[TOURNAMENT.tournament_link]})
@@ -81,16 +78,19 @@ class CricketDatabase:
             page = requests.get(MAIN_WEBSITE + tournament_link)
             main_soup = BeautifulSoup(page.content, 'html.parser')
             match_details = main_soup.findAll('div', attrs={"class": "cb-series-matches"})
-        print(match_details)
         tournament_matches_list, tournament_match_links = [], {}
         for match_box in match_details:
             collection_json = {}
             match_box_1 = match_box.findAll('div', attrs={"class": "schedule-date"})
             for xx in match_box_1:
-                match_start_end_date = [str(datetime.fromtimestamp(int(x['ng-bind'].split('|')[0].strip()[:-3]))).split(" ")[0]
-                                        for x in xx.findAll('span')]
-                match_start_date = match_start_end_date[0]
-                match_end_date = match_start_end_date[1] if len(match_start_end_date) == 2 else match_start_end_date[0]
+                try:
+                    match_start_end_date = [str(datetime.fromtimestamp(int(x['ng-bind'].split('|')[0].strip()[:-3]))).split(" ")[0]
+                                            for x in xx.findAll('span')]
+                    match_start_date = match_start_end_date[0]
+                    match_end_date = match_start_end_date[1] if len(match_start_end_date) == 2 else match_start_end_date[0]
+                except:
+                    match_start_date = match_start_date
+                    match_end_date = match_end_date
             match_box_2 = match_box.find('div', attrs={"class": "cb-col-60"}).contents
             if match_box.find('a', attrs={"class": "cb-text-inprogress"}) is not None:
                 match_result = match_box.find('a', attrs={"class": "cb-text-inprogress"}).text
@@ -125,7 +125,6 @@ class CricketDatabase:
             pass
         tournament_data_list, tournament_links = self._extract_tournament(last_extraction_date=last_extracted_date,
                                                                           only_series=only_series)
-        print(tournament_links)
         tournament_matches_list, tournament_match_links, match_count = [], {}, 0
         for link in tournament_links.values():
             matches_list, match_links = self._extract_tournament_matches(link, match_count)
@@ -133,12 +132,14 @@ class CricketDatabase:
             tournament_matches_list.extend(matches_list)
             tournament_match_links.update(match_links)
 
-        for link in tournament_match_links.values():
-            print(MAIN_WEBSITE + link)
+        # for link in tournament_match_links.values():
+        #     print(MAIN_WEBSITE + link)
 
 
 if __name__ == "__main__":
     cric_db = CricketDatabase()
     last_extracted_date = "2020-01-01"
-    # last_extracted_series = None
-    cric_db.run(last_extracted_date=last_extracted_date, only_series='Ireland tour of West Indies, 2020')
+    only_series = None
+    # only_series = 'ICC Under 19 World Cup Warm up Matches 2020'
+    # last_extracted_date = None
+    cric_db.run(last_extracted_date=last_extracted_date, only_series=only_series)
