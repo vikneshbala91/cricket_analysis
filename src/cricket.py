@@ -109,6 +109,8 @@ class CricketDatabase:
             else:
                 match_result = None
             match_box_3 = match_box.find('div', attrs={"class": "cb-font-12"}).contents
+            if 'href' not in str(match_box_2[0]):
+                continue
             collection_json[MATCH.match_link] = match_box_2[0]['href']
             collection_json[MATCH.match_title] = match_box_2[0].text
             collection_json[MATCH.match_place] = match_box_2[1].text
@@ -198,7 +200,7 @@ class CricketDatabase:
 if __name__ == "__main__":
     cric_db = CricketDatabase()
     # last_extracted_date = str(date.today())
-    year = 2017
+    year = 2020
     while year > 1889:
         start_year = year
         last_extracted_date = str(start_year) + '-12-31'

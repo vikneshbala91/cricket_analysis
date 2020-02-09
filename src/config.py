@@ -24,4 +24,7 @@ encode_month = {
 def _date(date_month_string, year):
     date = int(date_month_string.split(' ')[1])
     month = int(encode_month[date_month_string.split(' ')[0]])
-    return datetime.date(year, month, date)
+    try:
+        return datetime.date(year, month, date)
+    except:
+        return datetime.date(year + 1, month, date)
