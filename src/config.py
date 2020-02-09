@@ -2,6 +2,8 @@ import datetime
 MAIN_WEBSITE = "https://www.cricbuzz.com"
 BASE_URL = "https://www.cricbuzz.com/cricket-scorecard-archives/"
 MIN_SERIES_YEAR = 2018
+RETRY_SECONDS = 10
+MAX_RETRY_COUNT = 1
 
 encode_month = {
     'Jan': 1,
